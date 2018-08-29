@@ -9,6 +9,7 @@ or
 
 ```sh
 let objLinkedList = new LinkedList();
+
 objLinkedList.add('Apple');
 objLinkedList.add('Banana');
 objLinkedList.add('Carrot');

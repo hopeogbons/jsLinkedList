@@ -1,7 +1,7 @@
 # jsLinkedList
 Linked list implementation in javascript
 
-# Example
+### Example
 ```sh
 let objLinkedList = new LinkedList('Apple', 'Banana', 'Carrot', 'Drupes', 'Egg');
 ```
@@ -17,7 +17,7 @@ objLinkedList.add('Drupes');
 objLinkedList.add('Egg');
 ```
 
-# Console
+### Console
 ```sh
 console.log('Size: ', objLinkedList.getSize());
 console.log('Head: ', objLinkedList.getHead());

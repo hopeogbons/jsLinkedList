@@ -1,27 +1,25 @@
 # jsLinkedList
-Linked list implementation in javascript
+Singly Linked list implementation in javascript
 
 ### Example
 ```sh
-let objLinkedList = new LinkedList('Apple', 'Banana', 'Carrot', 'Drupes', 'Egg');
+let objSinglyLinkedList = new SinglyLinkedList('Apple', 'Banana', 'Carrot', 'Drupes', 'Egg');
 ```
 or 
 
 ```sh
-let objLinkedList = new LinkedList();
+let objSinglyLinkedList = new SinglyLinkedList();
 
-objLinkedList.add('Apple');
-objLinkedList.add('Banana');
-objLinkedList.add('Carrot');
-objLinkedList.add('Drupes');
-objLinkedList.add('Egg');
+objLinkedList.push('Apple');
+objLinkedList.push('Banana');
+objLinkedList.push('Carrot');
+objLinkedList.push('Drupes');
+objLinkedList.push('Egg');
 ```
 
 ### Console
 ```sh
-console.log('Size: ', objLinkedList.getSize());
-console.log('Head: ', objLinkedList.getHead());
-console.log('Size: ', objLinkedList.getSize());
-console.log('Remove: ', objLinkedList.removeAt(3));
-console.log('Size: ', objLinkedList.getSize());
+list.print()
+list.rotate(1, '<')
+list.print()
 ```

@@ -1,140 +1,140 @@
-class Node {
-  constructor (element) {
-    this.element = element;
-    this.pointer = null;
-  }
-};
-
-class LinkedList
-{
-  constructor() {
-    this.size = 0;
-    this.head = null;
-
-    if (arguments[0]) {
-      let x = 0;
-      while (arguments[x]) {
-        this.add(arguments[x])
-        x ++;
-      }
+class Node{
+    constructor(value) {
+        this.value = value;
+        this.next = null;
     }
-  };
+}
 
-  getSize () {
-    return this.size;
-  };
-
-  getHead () {
-    return this.head;
-  };
-
-  add (element) {
-    let node = new Node(element);
-    if (this.head === null) {
-      this.head = node;
-    } else {
-      let currentNode = this.head;
-
-      while (currentNode.pointer) {
-        currentNode = currentNode.pointer;
-      }
-
-      currentNode.pointer = node;
+class SinglyLinkedList{
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+        
+        if (arguments[0]) {
+            let x = 0;
+            while (arguments[x]) {
+                this.push(arguments[x])
+                x ++;
+            }
+        }
     }
-
-    this.size ++;
-  };
-
-  remove (element) {
-    let currentNode = this.head;
-    let previousNode;
-    if (currentNode.element === element) {
-      this.head = currentNode.pointer;
-    } else {
-      while (currentNode.element !== element) {
-        previousNode = currentNode;
-        currentNode = currentNode.pointer;
-      }
-
-      previousNode.pointer = currentNode.pointer;
+    push(value) {
+        let newNode = new Node(value);
+        if(!this.head){
+            this.head = newNode;
+            this.tail = this.head;
+        } else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+        this.length++;
+        return this;
     }
-
-    this.size --;
-  };
-
-  isEmpty () {
-    return this.size === 0;
-  };
-
-  indexOf (element) {
-    let currentNode = this.head;
-    let index = -1;
-
-    while (currentNode) {
-      index ++;
-      if (currentNode.element === element) {
-        return index;
-      }
-      currentNode = currentNode.pointer;
+    pop() {
+        if(!this.head) return undefined;
+        let current = this.head;
+        let newTail = current;
+        while(current.next){
+            newTail = current;
+            current = current.next;
+        }
+        this.tail = newTail;
+        this.tail.next = null;
+        this.length--;
+        if(this.length === 0){
+            this.head = null;
+            this.tail = null;
+        }
+        return current;
     }
-
-    return -1;
-  };
-
-  elementAt (index) {
-    let currentNode = this.head;
-    let count = 0;
-    while (count < index) {
-      count ++;
-      currentNode = currentNode.pointer;
+    shift() {
+        if(!this.head) return undefined;
+        let currentHead = this.head;
+        this.head = currentHead.next;
+        this.length--;
+        if(this.length === 0){
+            this.tail = null;
+        }
+        return currentHead;
     }
-    return currentNode.element;
-  }
-
-  addAt (index, element) {
-    let node = new Node(element);
-
-    let currentNode = this.head;
-    let previousNode;
-    let currentIndex = 0;
-
-    if (index > this.size) {
-      return false;
+    unshift(value) {
+        let newNode = new Node(value);
+        if(!this.head) {
+            this.head = newNode;
+            this.tail = this.head;
+        }
+        newNode.next = this.head;
+        this.head = newNode;
+        this.length++;
+        return this;
     }
-
-    if (index === 0) {
-      node.pointer = currentNode;
-      this.head = node;
-    } else {
-      while (currentIndex < index) {
-        currentIndex ++;
-        previousNode = currentNode;
-        currentNode = currentNode.pointer;
-      }
-      node.pointer = currentNode;
-      previousNode.pointer = node;
+    get(index) {
+        if(index < 0 || index >= this.length) return null;
+        let counter = 0;
+        let current = this.head;
+        while(counter !== index){
+            current = current.next;
+            counter++;
+        }
+        return current;
     }
-    this.size ++;
-  }
-
-  removeAt (index) {
-    let currentNode = this.head;
-    let previousNode;
-    let currentIndex = 0;
-    if (index < 0 || index >= this.size) {
-      return null
+    set(index, value) {
+        let foundNode = this.get(index);
+        if(foundNode){
+            foundNode.value = value;
+            return true;
+        }
+        return false;
     }
-    if (index === 0) {
-      this.head = currentNode.pointer;
-    } else {
-      while (currentIndex < index) {
-        currentIndex ++;
-        previousNode = currentNode;
-        currentNode = currentNode.pointer;
-      }
-      previousNode.pointer = currentNode.pointer
+    insert(index, value) {
+        if(index < 0 || index > this.length) return false;
+        if(index === this.length) return !!this.push(value);
+        if(index === 0) return !!this.unshift(value);
+        
+        let newNode = new Node(value);
+        let prev = this.get(index - 1);
+        let temp = prev.next;
+        prev.next = newNode;
+        newNode.next = temp;
+        this.length++;
+        return true;
     }
-    this.size --;
-    return currentNode.element;
-  }
+    remove(index) {
+        if(index < 0 || index >= this.length) return undefined;
+        if(index === 0) return this.shift();
+        if(index === this.length - 1) return this.pop();
+        let previousNode = this.get(index - 1);
+        let removed = previousNode.next;
+        previousNode.next = removed.next;
+        this.length--;
+        return removed;
+    }
+    reverse() {
+        let node = this.head;
+        this.head = this.tail;
+        this.tail = node;
+        let next;
+        let prev = null;
+        for(let i = 0; i < this.length; i++){
+            next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
+        }
+        return this;
+    }
+    rotate(steps, direction = '>') {
+        if (direction === '<') for(let i = 0; i < steps; i++) this.unshift(this.pop().value);
+        else for(let i = 0; i < steps; i++) this.push(this.shift().value);
+    }
+    print() {
+        let arr = [];
+        let current = this.head
+        while(current){
+            arr.push(current.value)
+            current = current.next
+        }
+        console.log(arr);
+    }
 }
